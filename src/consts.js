@@ -10,7 +10,7 @@ export const ROUTER_HASH = '#!';
 export const ROUTER_DEFAULT_PAGE = 'home';
 
 // mapbox
-export const MAPBOX_API_KEY = '';
+export const MAPBOX_API_KEY = 'pk.eyJ1IjoibWFhcm9zdGUiLCJhIjoiY2p2M3F0czhjMGxyeTQzbnRwZHMzNXR2aiJ9.NDMWEwHm3jNvYf_urSjd8g';
 
 // firebase
 export const INIT_FIREBASE = false;
