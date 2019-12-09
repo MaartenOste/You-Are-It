@@ -5,6 +5,14 @@
 
 	input {
 		margin: 5px 5px 0;
+		border: none;
+		border-radius: 5px;
+	}
+
+	select {
+		height: 3vh;
+		width: 125px;
+		border-radius: 5px;
 	}
 }
 

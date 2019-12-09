@@ -11,7 +11,6 @@ export default class DataSeeder {
     rnd2 *= 0.000001;
     this.lat += rnd1;
     this.lon += rnd2;
-
     console.log(`lat: ${this.lat} lon:${this.lon}`);
   }
 

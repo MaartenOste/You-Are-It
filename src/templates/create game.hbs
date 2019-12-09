@@ -1,0 +1,46 @@
+<div class="o-settings">
+  <div class="a-title">
+    Create game
+  </div>
+
+  <div class="m-setting">
+    <div class="a-statlabel">number of players</div>
+    <div class="m-bool">
+      <input type="number" name="quantity" min="1" max="20" class="a-personselector">
+      <img src="../../documents/user-solid.svg" class="a-usericon">
+    </div>
+  </div>
+  <div class="m-setting">
+    <div class="a-statlabel">game mode </div>
+    <div class="m-bool">
+      <select>
+        <option></option>
+        <option>normal mode</option>
+        <option>battle mode</option>
+      </select>
+    </div>
+  </div>
+  <div class="m-setting">
+    <div class="a-statlabel">duration</div>
+    <div class="m-bool">
+      <select class="a-timeselector">
+        <option></option>
+        <option>5:00</option>
+        <option>10:00</option>
+        <option>15:00</option>
+        <option>20:00</option>
+      </select>
+    </div>
+  </div>
+<div class="m-setting">
+    <div class="a-statlabel">map radius</div>
+    <div class="m-bool">
+      <input type="number" name="quantity" min="1" max="20" class="a-personselector">
+      <div>km</div>
+    </div>
+  </div>
+
+  <button class="a-button" type="submit">{{routerLink "lobby" "create game" ""}}</button>
+  <button class="a-button" type="submit">{{routerLink "play" "back" ""}}</button>
+
+</div>

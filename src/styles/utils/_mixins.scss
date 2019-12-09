@@ -7,6 +7,12 @@
 	height: $size;
 }
 
+@mixin circle($size) {
+	width: $size;
+	height: $size;
+	border-radius: 50%;
+}
+
 // at
 // ---
 // screen and min-width breakpoint
