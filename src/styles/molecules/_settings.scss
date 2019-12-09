@@ -1,0 +1,14 @@
+.m-bool {
+	position: relative;
+	display: flex;
+	overflow: hidden;
+
+	input {
+		margin: 5px 5px 0;
+	}
+}
+
+.m-setting {
+	display: flex;
+	justify-content: space-between;
+}

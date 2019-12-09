@@ -13,9 +13,13 @@
     <input type="password" placeholder="Enter Password" name="psw">
   </div>
 
-  <button class="a-button" type="submit">{{routerLink "mainmenu" "login" ""}}</button>
-
-  <div class="a-register">
-    {{routerLink "register" "or register!" ""}}
+  <div class="m-password">
+    <div class="a-label">
+      <label for="psw">Repeat password</label>
+    </div>
+    <input type="password" placeholder="Enter Password" name="psw">
   </div>
+
+  <button class="a-button" type="submit">{{routerLink "mainmenu" "register" ""}}</button>
+  <button class="a-button" type="submit">{{routerLink "home" "back" ""}}</button>
 </div>

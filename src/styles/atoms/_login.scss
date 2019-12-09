@@ -1,0 +1,23 @@
+.a-register {
+	text-align: center;
+	text-decoration: none;
+	color: $text-color-primary;
+}
+
+.a-button {
+	background-color: $text-color-primary;
+	color: $white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	border-radius: 5px;
+	font-family: "jura";
+	text-transform: uppercase;
+}
+
+.a-label {
+	font-weight: 900;
+	font-size: $font-size-big;
+}

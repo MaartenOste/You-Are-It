@@ -3,8 +3,9 @@
 $alabaster: #fafafa;
 $mercury: #e6e6e6;
 $dusty: #999;
-$shark: #262626;
+$shark: #403f3f;
 $midnight: #003569;
+$background: hsl(353, 69%, 43%);
 
 $white: #fff;
 $black: #000;
@@ -20,7 +21,7 @@ $text-color-primary: $shark;
 $link-color-primary: $midnight;
 $icon-color-primary: $shark;
 $border-color-primary: $mercury;
-$background-color-primary: $alabaster;
+$background-color-primary: $background;
 
 $text-color-secondary: $dusty;
 $background-color-secondary: $white;
