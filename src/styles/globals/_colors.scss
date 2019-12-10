@@ -4,8 +4,8 @@ $alabaster: #fafafa;
 $mercury: #e6e6e6;
 $dusty: #999;
 $shark: #403f3f;
-$midnight: #003569;
-$background: hsl(353, 69%, 43%);
+$midnight: #4485c7;
+$bad: hsl(353, 69%, 43%);
 
 $white: #fff;
 $black: #000;
@@ -17,11 +17,11 @@ $black: #000;
 $color-base: $shark;
 $border-color: $mercury;
 
-$text-color-primary: $shark;
+$dark-grey: $shark;
 $link-color-primary: $midnight;
 $icon-color-primary: $shark;
 $border-color-primary: $mercury;
-$background-color-primary: $background;
+$background-color: $bad;
 
 $text-color-secondary: $dusty;
 $background-color-secondary: $white;

@@ -11,7 +11,7 @@
 	top: 75vh;
 	left: 40vw;
 	@include circle(20vw);
-	background-color: $text-color-primary;
+	background-color: $dark-grey;
 	background-image: url("../assets/images/menu bar.png") !important;
 	background-size: 10vw;
 	background-repeat: no-repeat;

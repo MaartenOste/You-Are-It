@@ -1,5 +1,5 @@
 .a-button_menu {
-	background-color: $text-color-primary;
+	background-color: $dark-grey;
 	color: $white;
 	padding: 14px 20px;
 	margin: 3vh auto;
@@ -9,4 +9,13 @@
 	border-radius: 5px;
 	font-family: "jura";
 	text-transform: uppercase;
+}
+
+.a-theme {
+	@include circle(8vw);
+	background-color: $link-color-primary;
+	float: right;
+	margin-top: 1vh;
+	margin-right: 2vw;
+	border: 2px solid $white;
 }

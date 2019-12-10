@@ -1,11 +1,18 @@
 .a-register {
 	text-align: center;
 	text-decoration: none;
-	color: $text-color-primary;
+	color: $dark-grey;
+}
+
+.a-google {
+	margin-top: 2vh;
+	text-align: center;
+	text-decoration: none;
+	color: $dark-grey;
 }
 
 .a-button {
-	background-color: $text-color-primary;
+	background-color: $dark-grey;
 	color: $white;
 	padding: 14px 20px;
 	margin: 8px 0;
