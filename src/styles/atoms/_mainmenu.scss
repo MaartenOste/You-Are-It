@@ -2,14 +2,18 @@
 	background-color: $dark-grey;
 	color: $white;
 	padding: 14px 20px;
-	margin: 3vh auto;
+	margin: 3vh 0;
 	border: none;
 	cursor: pointer;
 	width: 100%;
 	border-radius: 5px;
 	font-family: "jura";
 	text-transform: uppercase;
+	display: block;
+	text-align: center;
 }
+
+
 
 .a-theme {
 	@include circle(8vw);

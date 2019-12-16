@@ -1,14 +1,15 @@
-export default class DataSeeder {
+class DataSeeder {
   constructor() {
-    this.lon = 3.71667;
-    this.lat = 51.05;
+    this.lat = 3.670823;
+    this.lon = 51.087544;
+    console.log('dataseeder ready');
   }
 
   changeLocation() {
     let rnd1 = Math.floor(Math.random() * 11) - 5;
     let rnd2 = Math.floor(Math.random() * 11) - 5;
-    rnd1 *= 0.000001;
-    rnd2 *= 0.000001;
+    rnd1 *= 0.0001;
+    rnd2 *= 0.0001;
     this.lat += rnd1;
     this.lon += rnd2;
     console.log(`lat: ${this.lat} lon:${this.lon}`);
@@ -23,4 +24,14 @@ export default class DataSeeder {
   stop() {
     clearInterval(this.interval);
   }
+
+  getPos() {
+    const P = {
+      lat: this.lat,
+      lon: this.lon,
+    };
+    return P;
+  }
 }
+
+export default DataSeeder;

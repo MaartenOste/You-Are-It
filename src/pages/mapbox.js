@@ -23,9 +23,6 @@ export default () => {
     zoom: 13,
   };
 
-  // create a new MapBox instance
-  // NOTE: make sure the HTML is rendered before making an instance of MapBox
-  // (it needs an element to render)
   if (MAPBOX_API_KEY !== '') {
     // eslint-disable-next-line no-unused-vars
     const mapBox = new MapBox(MAPBOX_API_KEY, mapBoxOptions);
