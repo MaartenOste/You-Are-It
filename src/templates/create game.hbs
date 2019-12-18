@@ -2,11 +2,12 @@
   <div class="a-title">
     Create game
   </div>
+<form action="" id="form">
 
   <div class="m-setting">
     <div class="a-statlabel">number of players</div>
     <div class="m-bool">
-      <input type="number" name="quantity" min="1" max="20" class="a-personselector" id="persons" required>
+      <input type="number" name="quantity" min="1" max="20" class="a-personselector" id="persons" placeholder="5" required>
       <img src="../../documents/user-solid.svg" class="a-usericon">
     </div>
   </div>
@@ -33,12 +34,13 @@
 <div class="m-setting">
     <div class="a-statlabel">map radius</div>
     <div class="m-bool">
-      <input type="number" name="quantity" min="1" max="20" class="a-personselector" id="radius" required>
+      <input type="number" name="quantity" min="1" max="20" class="a-personselector" id="radius" placeholder="5" required>
       <div>km</div>
     </div>
   </div>
+    {{routerLink "lobby" "create game" "a-button_menu"}}
+</form>
 
-  {{routerLink "lobby" "create game" "a-button_menu"}}
   {{routerLink "play" "back" "a-button_menu"}}
 
 </div>

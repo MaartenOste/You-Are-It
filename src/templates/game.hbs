@@ -1,7 +1,16 @@
 <div class="o-game">
 	<div class="a-map">	<div id="mapbox" class="m-mapbox"></div>
 	</div>
-	<div class="a-timer">16:45</div>
+	<div class="a-timer" id="timer"></div>
 	<div class="a-menubutton" id="menubutton"></div>
-	<div class="m-gamemenu" id="gamemenu"></div>
+	<div class="m-gamemenu" id="gamemenu" style="display: none;">
+		<div class="m-menulist" id="leave" >
+			<div class="a-button_menu" id="leave">leave game</div>
+		</div>
+		<div class="a-confirm" id="confirm" style="display: none;">
+			<div>Are you sure you <br>want to leave?</div>
+			{{routerLink "mainmenu" "yes" "a-button_gamemenu"}}
+			<div class="a-button_gamemenu" id="decline">no</div>
+		</div>
+	</div>
 </div>

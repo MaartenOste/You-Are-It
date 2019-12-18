@@ -6,7 +6,6 @@
  */
 
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
-import * as d3 from 'd3';
 
 class MapBox {
   constructor(apiKey, options = {}) {
@@ -136,59 +135,6 @@ class MapBox {
         'text-offset': [0, 0.6],
         'text-anchor': 'top',
       },
-    });
-  }
-
-  autoRun() {
-    this.map.on('load', () => {
-      // We use D3 to fetch the JSON here so that we can parse and use it separately
-      // from GL JS's use in the added source. You can use any request method (library
-      // or otherwise) that you want.
-      d3.json(
-        'https://docs.mapbox.com/mapbox-gl-js/assets/hike.geojson',
-        (err, data) => {
-          if (err) throw err;
-
-          // save full coordinate list for later
-          const { coordinates } = data.features[0].geometry;
-
-          // start by showing just the first coordinate
-          // eslint-disable-next-line no-param-reassign
-          data.features[0].geometry.coordinates = [coordinates[0]];
-
-          // add it to the map
-          this.map.addSource('trace', { type: 'geojson', data });
-          this.map.addLayer({
-            id: 'trace',
-            type: 'line',
-            source: 'trace',
-            paint: {
-              'line-color': 'yellow',
-              'line-opacity': 0.75,
-              'line-width': 5,
-            },
-          });
-
-          // setup the viewport
-          this.map.jumpTo({ center: coordinates[0], zoom: 14 });
-          this.map.setPitch(30);
-
-          // on a regular basis, add more coordinates from the saved list and update the map
-          let i = 0;
-          const timer = window.setInterval(() => {
-            if (i < coordinates.length) {
-              data.features[0].geometry.coordinates.push(
-                coordinates[i],
-              );
-              this.map.getSource('trace').setData(data);
-              this.map.panTo(coordinates[i]);
-              i++;
-            } else {
-              window.clearInterval(timer);
-            }
-          }, 10);
-        },
-      );
     });
   }
 }

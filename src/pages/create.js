@@ -16,10 +16,18 @@ export default () => {
 
   const buttons = document.getElementsByClassName('a-button_menu');
   buttons[0].addEventListener('click', () => {
-    settings.push(document.getElementById('persons').value);
+    if (document.getElementById('persons').value === '') {
+      settings.push(5);
+    } else {
+      settings.push(document.getElementById('persons').value);
+    }
     settings.push(document.getElementById('gamemode').options[document.getElementById('gamemode').selectedIndex].value);
     settings.push(document.getElementById('timer').options[document.getElementById('timer').selectedIndex].value);
-    settings.push(document.getElementById('radius').value);
+    if (document.getElementById('radius').value === '') {
+      settings.push(5);
+    } else {
+      settings.push(document.getElementById('radius').value);
+    }
     ls.setArray('GameSettings', settings);
   });
 };
