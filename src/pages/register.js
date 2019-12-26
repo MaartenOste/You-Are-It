@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /**
  * The Home Page
  */
@@ -13,4 +14,33 @@ export default () => {
 
   // render the template
   App.render(homeTemplate({ title }));
+
+  function signup() {
+    const email = document.getElementById('emailfield').value;
+    const pw = document.getElementById('pwfield').value;
+    const pw1 = document.getElementById('pwfield1').value;
+
+    if (pw === pw1) {
+      App.firebase.getAuth().createUserWithEmailAndPassword(email, pw).catch((error) => {
+        // eslint-disable-next-line no-unused-vars
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        window.alert(`Error: ${errorMessage}`);
+        App.router.navigate('/register');
+        document.getElementById('emailfield').value = '';
+        document.getElementById('pwfield').value = '';
+        document.getElementById('pwfield1').value = '';
+      });
+    } else {
+      window.alert('The two given passwords are not identical.');
+      App.router.navigate('/register');
+      document.getElementById('pwfield').value = '';
+      document.getElementById('pwfield1').value = '';
+    }
+  }
+
+
+  document.getElementsByClassName('a-button_menu')[0].addEventListener('click', () => {
+    signup();
+  });
 };

@@ -1,0 +1,25 @@
+<div class="o-login">
+  <div class="m-username">
+    <div class="a-label">
+      <label for="uname">Email</label>
+    </div>
+    <input type="text" placeholder="Enter email" name="uname" id="emailfield">
+  </div>
+
+  <div class="m-password">
+    <div class="a-label">
+      <label for="psw">Password</label>
+    </div>
+    <input type="password" placeholder="Enter Password" name="psw" id="pwfield">
+  </div>
+
+  {{routerLink "mainmenu" "login" "a-button_menu"}}
+
+  <div class="a-register">
+    {{routerLink "register" "or register!" ""}}
+  </div>
+  
+  <div class="a-google">
+    <img src="../assets/images/signingoogle.png" alt="" id="google">
+  </div>
+</div>

@@ -39,6 +39,10 @@ class FireBase {
   getAuth() {
     return firebase.auth();
   }
+
+  getGoogle() {
+    return new firebase.auth.GoogleAuthProvider();
+  }
 }
 
 export default FireBase;

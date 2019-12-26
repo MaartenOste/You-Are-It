@@ -22,13 +22,39 @@ export default () => {
 
   document.getElementById('theme').addEventListener('click', () => {
     if (ls.getItem('theme') === 'bad') {
+      document.body.style.backgroundImage = "url('../images/goodbg.png')";
       document.body.style.backgroundColor = '#4485c7';
       document.getElementById('theme').style.backgroundColor = '#b92234';
       ls.setItem('theme', 'good');
     } else {
+      document.body.style.backgroundImage = "url('../images/badbg.png')";
       document.body.style.backgroundColor = '#b92234';
       document.getElementById('theme').style.backgroundColor = '#4485c7';
       ls.setItem('theme', 'bad');
+    }
+  });
+
+  if (ls.getItem('theme') === 'bad') {
+    document.body.style.backgroundImage = "url('../images/badbg.png')";
+    document.body.style.backgroundSize = '100vw 100vh';
+  } else {
+    document.body.style.backgroundImage = "url('../images/goodbg.png')";
+    document.body.style.backgroundSize = '100vw 100vh';
+  }
+
+  function logout() {
+    App.firebase.getAuth().signOut();
+  }
+
+  document.getElementsByClassName('a-button_menu')[3].addEventListener('click', () => {
+    logout();
+  });
+
+  App.firebase.getAuth().onAuthStateChanged((user) => {
+    if (user) {
+      const mail = App.firebase.getAuth().currentUser.email;
+      const name = mail.substr(0, mail.indexOf('@'));
+      console.log(name);
     }
   });
 };
