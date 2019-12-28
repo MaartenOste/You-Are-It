@@ -20,7 +20,7 @@
     "JS",
     "Vanilla"
   ],
-  "author": "Artevelde University College Ghent",
+  "author": "Maarten Oste",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.6.0",

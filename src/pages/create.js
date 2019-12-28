@@ -2,7 +2,7 @@ import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LS from '../lib/core/LocalStorage';
 
-const homeTemplate = require('../templates/create game.hbs');
+const createTemplate = require('../templates/create game.hbs');
 
 export default () => {
   const ls = new LS(localStorage);
@@ -12,7 +12,7 @@ export default () => {
   const title = `${SITE_TITLE} is ready to go!`;
 
   // render the template
-  App.render(homeTemplate({ title }));
+  App.render(createTemplate({ title }));
 
   const buttons = document.getElementsByClassName('a-button_menu');
   buttons[0].addEventListener('click', () => {
@@ -30,4 +30,5 @@ export default () => {
     }
     ls.setArray('GameSettings', settings);
   });
+  ls.setItem('UserType', 'mod');
 };

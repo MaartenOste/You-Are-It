@@ -3,9 +3,10 @@
     <div class="a-label">
       <label for="uname">Lobby code</label>
     </div>
-    <input type="text" placeholder="Enter lobby code" name="uname" style="text-transform: uppercase;">
+    <input type="text" placeholder="Enter lobby code" name="uname" style="text-transform: uppercase;" onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" maxlength="4" id="code">
   </div>
-  {{routerLink "lobby" "join" "a-button_menu"}}
+  <div class="a-button_menu" id="join">join</div>
   {{routerLink "play" "back" "a-button_menu"}}
 
 </div>

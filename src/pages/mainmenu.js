@@ -3,7 +3,7 @@ import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
 
-const homeTemplate = require('../templates/mainmenu.hbs');
+const mainmenuTemplate = require('../templates/mainmenu.hbs');
 
 export default () => {
   const ls = new LocalStorage(localStorage);
@@ -11,7 +11,7 @@ export default () => {
   const title = `${SITE_TITLE} is ready to go!`;
 
   // render the template
-  App.render(homeTemplate({ title }));
+  App.render(mainmenuTemplate({ title }));
   if (ls.getItem('theme') === 'good') {
     document.body.style.backgroundColor = '#4485c7';
     document.getElementById('theme').style.backgroundColor = '#b92234';
@@ -22,12 +22,12 @@ export default () => {
 
   document.getElementById('theme').addEventListener('click', () => {
     if (ls.getItem('theme') === 'bad') {
-      document.body.style.backgroundImage = "url('../images/goodbg.png')";
+      document.body.style.backgroundImage = "url('../assets/images/goodbg.png')";
       document.body.style.backgroundColor = '#4485c7';
       document.getElementById('theme').style.backgroundColor = '#b92234';
       ls.setItem('theme', 'good');
     } else {
-      document.body.style.backgroundImage = "url('../images/badbg.png')";
+      document.body.style.backgroundImage = "url('../assets/images/badbg.png')";
       document.body.style.backgroundColor = '#b92234';
       document.getElementById('theme').style.backgroundColor = '#4485c7';
       ls.setItem('theme', 'bad');
@@ -35,10 +35,10 @@ export default () => {
   });
 
   if (ls.getItem('theme') === 'bad') {
-    document.body.style.backgroundImage = "url('../images/badbg.png')";
+    document.body.style.backgroundImage = "url('../assets/images/badbg.png')";
     document.body.style.backgroundSize = '100vw 100vh';
   } else {
-    document.body.style.backgroundImage = "url('../images/goodbg.png')";
+    document.body.style.backgroundImage = "url('../assets/images/goodbg.png')";
     document.body.style.backgroundSize = '100vw 100vh';
   }
 

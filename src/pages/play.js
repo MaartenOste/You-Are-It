@@ -1,12 +1,12 @@
 import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 
-const homeTemplate = require('../templates/play.hbs');
+const playTemplate = require('../templates/play.hbs');
 
 export default () => {
   // set the title of this page
   const title = `${SITE_TITLE} is ready to go!`;
 
   // render the template
-  App.render(homeTemplate({ title }));
+  App.render(playTemplate({ title }));
 };

@@ -9,6 +9,7 @@ import JoinPage from './pages/join';
 import CreatePage from './pages/create';
 import LobbyPage from './pages/lobby';
 import Game from './pages/game';
+import ChoosePage from './pages/choose';
 
 export default [
   { path: '/login', view: LoginPage },
@@ -21,4 +22,5 @@ export default [
   { path: '/create game', view: CreatePage },
   { path: '/lobby', view: LobbyPage },
   { path: '/game', view: Game },
+  { path: '/choose', view: ChoosePage },
 ];

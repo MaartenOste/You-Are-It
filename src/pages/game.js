@@ -4,12 +4,12 @@ import MapBox from '../lib/core/MapBox';
 import DataSeeder from '../lib/core/Dataseeder';
 import Storage from '../lib/core/LocalStorage';
 
-const homeTemplate = require('../templates/game.hbs');
+const gameTemplate = require('../templates/game.hbs');
 
-export default () => {
+export default async () => {
   const title = `${SITE_TITLE} is ready to go!`;
 
-  App.render(homeTemplate({ title }));
+  App.render(gameTemplate({ title }));
 
   const mapBoxOptions = {
     container: 'mapbox',
@@ -28,9 +28,10 @@ export default () => {
 
 
   const dsArray = [];
+
   for (let i = 0; i < ls.getArray('GameSettings')[0]; i++) {
     dsArray.push(new DataSeeder(ls.getArray('GameSettings')[2]));
-    mapBox.addMarker(P.latitude + i * 0.005, P.longitude + i * 0.005, `Player${i}`);
+    mapBox.addPic(P.latitude, P.longitude, `Player${i}`, 'good');
   }
 
   const interval = setInterval(() => {
@@ -44,7 +45,7 @@ export default () => {
         }
         if (mapBox.map.getSource(`Player${i}`)) {
           mapBox.map.removeSource(`Player${i}`);
-          mapBox.updateMarker(dsArray[i].getPos().lat, dsArray[i].getPos().lon, `Player${i}`);
+          mapBox.updatePicGood(dsArray[i].getPos().lat, dsArray[i].getPos().lon, `Player${i}`);
         }
       }
     }
@@ -54,13 +55,12 @@ export default () => {
   const interval2 = setInterval(() => {
     document.getElementById('timer').innerText = dsArray[0].time;
     if (dsArray[0].time === '00:00') {
+      clearInterval(interval);
       clearInterval(interval2);
     }
   }, 1000);
 
   document.getElementById('menubutton').addEventListener('click', () => {
-    clearInterval(interval);
-    clearInterval(interval2);
     if (document.getElementById('gamemenu').style.display === 'block') {
       document.getElementById('gamemenu').style.display = 'none';
     } else {
@@ -80,5 +80,11 @@ export default () => {
   document.getElementById('decline').addEventListener('click', () => {
     document.getElementById('leave').style.display = 'block';
     document.getElementById('confirm').style.display = 'none';
+  });
+
+  document.getElementById('confirm').addEventListener('click', () => {
+    clearInterval(interval);
+    clearInterval(interval2);
+    App.router.navigate('mainmenu');
   });
 };

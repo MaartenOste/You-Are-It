@@ -71,7 +71,7 @@ module.exports = (env, argv) => {
           loader: 'url-loader',
           query: {
             limit: 1000,
-            name: 'images/[name].[hash:7].[ext]',
+            name: 'assets/images/[name].[ext]',
           },
         },
         {

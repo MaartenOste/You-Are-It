@@ -1,0 +1,16 @@
+.m-choose {
+	position: absolute;
+	top: 38vh;
+	width: 90vw;
+	margin: 0 5vw;
+	font-size: $font-choose;
+	text-transform: uppercase;
+	text-align: center;
+	color: $white;
+}
+
+.m-gb {
+	display: flex;
+	overflow: hidden;
+	justify-content: space-between;
+}

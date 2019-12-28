@@ -1,10 +1,36 @@
 class DataSeeder {
-  constructor(time) {
+  constructor(time = '10:00') {
     this.lat = 3.670823;
     this.lon = 51.087544;
     this.changeLocation();
     this.timer(time);
     console.log('dataseeder ready');
+  }
+
+  randomCode() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    for (let i = 0; i < 4; i++) {
+      code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return code;
+  }
+
+  async randomPersons(amount = 5) {
+    const persons = [];
+    let temp = [];
+    try {
+      const data = await fetch(`https://randomuser.me/api/?results=${amount}`);
+      const profielen = await data.json();
+
+      temp = profielen.results;
+    } catch (e) {
+      throw new Error(e.message);
+    }
+    temp.forEach((person) => {
+      persons.push(`${person.name.first} ${person.name.last}`);
+    });
+    return persons;
   }
 
   changeLocation() {

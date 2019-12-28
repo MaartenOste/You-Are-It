@@ -137,6 +137,93 @@ class MapBox {
       },
     });
   }
+
+  addPic(lat, lon, name, type) {
+    this.map.on('load', () => {
+      this.map.loadImage(
+        `../assets/images/${type}emoji.png`,
+        (error, image) => {
+          if (error) throw error;
+          this.map.addImage(type, image);
+          this.map.addLayer({
+            id: name,
+            type: 'symbol',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'FeatureCollection',
+                features: [
+                  {
+                    type: 'Feature',
+                    geometry: {
+                      type: 'Point',
+                      coordinates: [lat, lon],
+                    },
+                  },
+                ],
+              },
+            },
+            layout: {
+              'icon-image': type,
+              'icon-size': 0.07,
+            },
+          });
+        },
+      );
+    });
+  }
+
+  updatePicGood(lat, lon, name) {
+    this.map.addLayer({
+      id: name,
+      type: 'symbol',
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [lat, lon],
+              },
+            },
+          ],
+        },
+      },
+      layout: {
+        'icon-image': 'good',
+        'icon-size': 0.07,
+      },
+    });
+  }
+
+  updatePicBad(lat, lon, name) {
+    this.map.addLayer({
+      id: name,
+      type: 'symbol',
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [lat, lon],
+              },
+            },
+          ],
+        },
+      },
+      layout: {
+        'icon-image': 'bad',
+        'icon-size': 0.10,
+      },
+    });
+  }
 }
 
 export default MapBox;

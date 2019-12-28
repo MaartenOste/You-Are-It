@@ -6,14 +6,14 @@
 import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 
-const homeTemplate = require('../templates/register.hbs');
+const registerTemplate = require('../templates/register.hbs');
 
 export default () => {
   // set the title of this page
   const title = `${SITE_TITLE} is ready to go!`;
 
   // render the template
-  App.render(homeTemplate({ title }));
+  App.render(registerTemplate({ title }));
 
   function signup() {
     const email = document.getElementById('emailfield').value;
