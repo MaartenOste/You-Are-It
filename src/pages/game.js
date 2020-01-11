@@ -17,15 +17,14 @@ export default async () => {
     style: 'mapbox://styles/mapbox/streets-v11',
     zoom: 14,
   };
+
   const mapBox = new MapBox(MAPBOX_API_KEY, mapBoxOptions);
   const ls = new Storage(localStorage);
-
 
   const P = {
     latitude: 3.670823,
     longitude: 51.087544,
   };
-
 
   const dsArray = [];
 
@@ -83,6 +82,8 @@ export default async () => {
   });
 
   document.getElementById('confirm').addEventListener('click', () => {
+    const data = { timeplayed: dsArray[0].timeplayed };
+    App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
     clearInterval(interval);
     clearInterval(interval2);
     App.router.navigate('mainmenu');

@@ -16,13 +16,34 @@ export default async () => {
   const d = new DataSeeder();
 
   if (ls.getItem('UserType') === 'player') {
-    ls.setArray('GameSettings', [5 + Math.floor(Math.random() * 20), 'normal', 10, 5]);
+    ls.setArray('GameSettings', [5 + Math.floor(Math.random() * 5), 'normal', 10, 5]);
     document.getElementById('code').innerHTML = `CODE: ${ls.getItem('Code').toUpperCase()}`;
   } else {
-    document.getElementById('code').innerHTML = `CODE: ${d.randomCode().toUpperCase()}`;
+    const code = d.randomCode().toUpperCase();
+    document.getElementById('code').innerHTML = `CODE: ${code}`;
+    ls.setItem('Code', code);
   }
 
   const profiles = await d.randomPersons(ls.getArray('GameSettings')[0]);
+
+  await App.firebase.getFirestore().collection('players').where('lobbycode', '==', ls.getItem('Code').toUpperCase()).get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, ' => ', doc.data());
+      });
+    })
+    .catch((error) => {
+      console.log('Error getting documents: ', error);
+    });
+
+  App.firebase.getAuth().onAuthStateChanged(async (user) => {
+    if (user) {
+      const mail = App.firebase.getAuth().currentUser.email;
+      const name = mail.substr(0, mail.indexOf('@'));
+      console.log(name);
+    }
+  });
 
   profiles.forEach((name) => {
     const div = document.createElement('div');
@@ -37,4 +58,22 @@ export default async () => {
   document.body.style.backgroundImage = '';
 
   document.getElementsByClassName('a-title')[0].innerText = `${ls.getArray('GameSettings')[1]} mode`;
+
+  document.getElementById('start').addEventListener('click', async () => {
+    let data = 'yeet';
+    const { uid } = App.firebase.getAuth().currentUser;
+    await App.firebase.getFirestore().collection('players').doc(uid).get()
+      .then((doc) => {
+        if (!doc.exists) {
+          console.log('No such document!');
+          data = { games: 1 };
+        } else {
+          data = { games: doc.data().games + 1 };
+        }
+      })
+      .catch((err) => {
+        console.log('Error getting document', err);
+      });
+    App.firebase.setStat(uid, data);
+  });
 };

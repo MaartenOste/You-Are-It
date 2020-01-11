@@ -3,25 +3,24 @@
 		Stats
 	</div>
 	<div class="m-name">
-		<div class="a-username">Username123</div>
-		<img src="../../documents/user-solid.svg" class="a-usericon">
+		<div class="a-username" id="uname"></div>
+		<div id="uicon">
+			<img src="../../documents/user-solid.svg" class="a-usericon">
+		</div>
 	</div>
 	<div class="m-setting">
 		<div class="a-statlabel">time played</div>
-		<div class="a-stat">
-			2d 5h 36m
+		<div class="a-stat" id="timeplayed">
 		</div>
 	</div>
 	<div class="m-setting">
 		<div class="a-statlabel">games played</div>
-		<div class="a-stat">
-			264
+		<div class="a-stat" id="games">
 		</div>
 	</div>
 	<div class="m-setting">
 		<div class="a-statlabel">wins</div>
-		<div class="a-stat">
-			150
+		<div class="a-stat" id="wins">
 		</div>
 	</div>
 	{{routerLink "mainmenu" "back" "a-button_menu"}}

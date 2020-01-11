@@ -2,11 +2,15 @@
 import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
+import LocationManager from '../lib/core/LocationManager';
 
 const mainmenuTemplate = require('../templates/mainmenu.hbs');
 
 export default () => {
   const ls = new LocalStorage(localStorage);
+  // eslint-disable-next-line no-unused-vars
+  const lm = new LocationManager();
+  lm.getCurrentPosition();
   // set the title of this page
   const title = `${SITE_TITLE} is ready to go!`;
 
@@ -50,11 +54,25 @@ export default () => {
     logout();
   });
 
-  App.firebase.getAuth().onAuthStateChanged((user) => {
+  App.firebase.getAuth().onAuthStateChanged(async (user) => {
     if (user) {
-      const mail = App.firebase.getAuth().currentUser.email;
-      const name = mail.substr(0, mail.indexOf('@'));
-      console.log(name);
+      const userid = App.firebase.getAuth().currentUser.uid;
+      let name = App.firebase.getAuth().currentUser.displayName;
+
+      if (name == null) {
+        const { email } = App.firebase.getAuth().currentUser;
+        name = email.substring(0, email.lastIndexOf('@'));
+      }
+      lm.getCurrentPosition();
+      await App.firebase.getFirestore().collection('players').doc(userid).get()
+        .then((doc) => {
+          if (!doc.exists) {
+            App.firebase.addUser(name, ls.getItem('location'), '', userid);
+          }
+        })
+        .catch((err) => {
+          console.log('Error getting document', err);
+        });
     }
   });
 };

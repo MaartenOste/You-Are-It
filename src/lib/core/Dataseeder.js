@@ -4,7 +4,7 @@ class DataSeeder {
     this.lon = 51.087544;
     this.changeLocation();
     this.timer(time);
-    console.log('dataseeder ready');
+    this.timeplayed = 0;
   }
 
   randomCode() {
@@ -64,6 +64,7 @@ class DataSeeder {
         timer = duration;
       }
       this.time = `${minutes}:${seconds}`;
+      this.timeplayed++;
     }, 1000);
   }
 
