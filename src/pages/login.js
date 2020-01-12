@@ -16,7 +16,6 @@ export default () => {
   // render the template
   App.render(loginTemplate({ title }));
   const ls = new LocalStorage(localStorage);
-  console.log(ls.getItem('theme'));
   if (ls.getItem('theme') === 'undefined' || ls.getItem('theme') === 'bad') {
     const badcolor = 'rgb(185, 34, 52)';
 
@@ -48,9 +47,7 @@ export default () => {
 
   function loginGoogle() {
     const provider = App.firebase.getGoogle();
-    App.firebase.getAuth().signInWithPopup(provider).then((result) => {
-      console.log(result);
-      console.log('Succes to login with google');
+    App.firebase.getAuth().signInWithPopup(provider).then(() => {
       App.router.navigate('/mainmenu');
     }).catch((err) => {
       console.log(err);
@@ -61,7 +58,6 @@ export default () => {
   App.firebase.getAuth().onAuthStateChanged((user) => {
     if (user) {
       App.router.navigate('/mainmenu');
-      console.log(`logged in with: ${App.firebase.getAuth().currentUser.email}`);
     }
   });
 

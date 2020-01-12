@@ -14,7 +14,6 @@ export default () => {
 
   const ls = new LocalStorage(localStorage);
   function chooseSide(event) {
-    console.log(`clientX: ${event.clientX} - clientY: ${event.clientY} - height ${window.screen.height}`);
     if (event.clientX > window.screen.width / 2 && event.clientY > window.screen.height / 2) {
       ls.setItem('theme', 'bad');
       App.router.navigate('/login');
@@ -29,7 +28,8 @@ export default () => {
     if (user) {
       App.router.navigate('/mainmenu');
       console.log(`logged in with: ${App.firebase.getAuth().currentUser.email}`);
+    } else {
+      document.addEventListener('click', chooseSide);
     }
   });
-  document.addEventListener('click', chooseSide);
 };

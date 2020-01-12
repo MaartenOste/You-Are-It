@@ -1,13 +1,15 @@
+/* eslint-disable no-restricted-properties */
 class DataSeeder {
-  constructor(time = '10:00') {
-    this.lat = 3.670823;
-    this.lon = 51.087544;
+  constructor(time = '10:00', type, lat = 3.670823, lon = 51.087544) {
+    this.lat = lat;
+    this.lon = lon;
     this.changeLocation();
     this.timer(time);
     this.timeplayed = 0;
+    this.type = type;
   }
 
-  randomCode() {
+  static randomCode() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let code = '';
     for (let i = 0; i < 4; i++) {
@@ -34,10 +36,11 @@ class DataSeeder {
   }
 
   changeLocation() {
-    let rnd1 = Math.floor(Math.random() * 11) - 5;
-    let rnd2 = Math.floor(Math.random() * 11) - 5;
-    rnd1 *= 0.0002;
-    rnd2 *= 0.0002;
+    const rnd3 = Math.random() * Math.PI * 2;
+    let rnd1 = Math.sin(rnd3);
+    let rnd2 = Math.cos(rnd3);
+    rnd1 *= Math.random() * 0.0005;
+    rnd2 *= Math.random() * 0.0005;
     this.lat += rnd1;
     this.lon += rnd2;
   }
@@ -70,6 +73,10 @@ class DataSeeder {
 
   getTime() {
     return this.time;
+  }
+
+  calcDistanceTo(lat, lon) {
+    return Math.sqrt(Math.pow(this.lat - lat, 2) + Math.pow(this.lon - lon, 2));
   }
 }
 

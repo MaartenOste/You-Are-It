@@ -16,7 +16,7 @@ export default () => {
 
   document.getElementById('join').addEventListener('click', () => {
     if (document.getElementById('code').value.length === 4) {
-      ls.setItem('Code', document.getElementById('code').value);
+      ls.setItem('Code', document.getElementById('code').value.toUpperCase());
       App.router.navigate('lobby');
     } else { window.alert('The code has to be 4 letters'); }
   });

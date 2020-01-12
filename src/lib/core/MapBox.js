@@ -32,47 +32,6 @@ class MapBox {
     return this.map;
   }
 
-  addMarker(lat, lon, name) {
-    this.map.on('load', () => {
-      this.map.addLayer({
-        id: name,
-        type: 'symbol',
-        fadeDuration: 0,
-        source: {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [
-                    lat,
-                    lon,
-                  ],
-                },
-                properties: {
-                  title: name,
-                },
-              },
-            ],
-          },
-        },
-        layout: {
-          // get the icon name from the source's "icon" property
-          // concatenate the name to get an icon from the style's sprite sheet
-          'icon-image': ['concat', ['get', 'icon'], '-15'],
-          // get the title name from the source's "title" property
-          'text-field': ['get', 'title'],
-          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-          'text-offset': [0, 0.6],
-          'text-anchor': 'top',
-        },
-      });
-    });
-  }
-
   addRadius(lat, lon) {
     this.map.on('load', () => {
       this.map.addLayer({
@@ -100,51 +59,15 @@ class MapBox {
     });
   }
 
-  updateMarker(lat, lon, name) {
-    this.map.addLayer({
-      id: name,
-      type: 'symbol',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [
-                  lat,
-                  lon,
-                ],
-              },
-              properties: {
-                title: name,
-              },
-            },
-          ],
-        },
-      },
-      layout: {
-        // get the icon name from the source's "icon" property
-        // concatenate the name to get an icon from the style's sprite sheet
-        'icon-image': ['concat', ['get', 'icon'], '-15'],
-        // get the title name from the source's "title" property
-        'text-field': ['get', 'title'],
-        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        'text-offset': [0, 0.6],
-        'text-anchor': 'top',
-      },
-    });
-  }
-
   addPic(lat, lon, name, type) {
     this.map.on('load', () => {
       this.map.loadImage(
         `../assets/images/${type}emoji.png`,
         (error, image) => {
           if (error) throw error;
-          this.map.addImage(type, image);
+          if (!this.map.hasImage(type)) {
+            this.map.addImage(type, image);
+          }
           this.map.addLayer({
             id: name,
             type: 'symbol',
@@ -166,6 +89,12 @@ class MapBox {
             layout: {
               'icon-image': type,
               'icon-size': 0.07,
+              'text-field': name,
+              'symbol-placement': 'point',
+              'text-anchor': 'bottom',
+              'text-offset': [0, -1],
+              'text-allow-overlap': true,
+              'icon-allow-overlap': true,
             },
           });
         },
@@ -195,6 +124,12 @@ class MapBox {
       layout: {
         'icon-image': 'good',
         'icon-size': 0.07,
+        'text-field': name,
+        'symbol-placement': 'point',
+        'text-anchor': 'bottom',
+        'text-offset': [0, -1],
+        'text-allow-overlap': true,
+        'icon-allow-overlap': true,
       },
     });
   }
@@ -220,7 +155,13 @@ class MapBox {
       },
       layout: {
         'icon-image': 'bad',
-        'icon-size': 0.10,
+        'icon-size': 0.07,
+        'text-field': name,
+        'symbol-placement': 'point',
+        'text-anchor': 'bottom',
+        'text-offset': [0, -1],
+        'text-allow-overlap': true,
+        'icon-allow-overlap': true,
       },
     });
   }

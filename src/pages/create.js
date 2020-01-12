@@ -1,6 +1,7 @@
 import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LS from '../lib/core/LocalStorage';
+import DataSeeder from '../lib/core/Dataseeder';
 
 const createTemplate = require('../templates/create game.hbs');
 
@@ -24,10 +25,12 @@ export default () => {
     settings.push(document.getElementById('gamemode').options[document.getElementById('gamemode').selectedIndex].value);
     settings.push(document.getElementById('timer').options[document.getElementById('timer').selectedIndex].value);
     if (document.getElementById('radius').value === '') {
-      settings.push(5);
+      settings.push(1);
     } else {
       settings.push(document.getElementById('radius').value);
     }
+    const code = DataSeeder.randomCode();
+    ls.setItem('Code', code);
     ls.setArray('GameSettings', settings);
   });
   ls.setItem('UserType', 'mod');
