@@ -58,6 +58,10 @@ class FireBase {
   setStat(uid, data) {
     this.getFirestore().collection('players').doc(uid).set(data, { merge: true });
   }
+
+  deleteOnUID(uid) {
+    this.getFirestore().collection('players').doc(uid).delete();
+  }
 }
 
 export default FireBase;

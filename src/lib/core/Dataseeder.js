@@ -18,6 +18,15 @@ class DataSeeder {
     return code;
   }
 
+  static randomUID() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let code = '';
+    for (let i = 0; i < 28; i++) {
+      code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return code;
+  }
+
   async randomPersons(amount = 5) {
     const persons = [];
     let temp = [];
@@ -77,6 +86,10 @@ class DataSeeder {
 
   calcDistanceTo(lat, lon) {
     return Math.sqrt(Math.pow(this.lat - lat, 2) + Math.pow(this.lon - lon, 2));
+  }
+
+  calcDistanceTo2(lat, lon, lat2, lon2) {
+    return Math.sqrt(Math.pow(lat2 - lat, 2) + Math.pow(lon2 - lon, 2));
   }
 }
 

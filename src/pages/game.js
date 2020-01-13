@@ -36,6 +36,20 @@ export default async () => {
 
   const dsArray = [];
 
+  let profiles = [];
+
+  await App.firebase.getFirestore().collection('players').where('lobbycode', '==', ls.getItem('Code').toUpperCase()).get()
+    .then((querySnapshot) => {
+      profiles = [];
+      querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+        profiles.push(doc.data());
+      });
+    })
+    .catch((error) => {
+      console.log('Error getting documents: ', error);
+    });
+
   for (let i = 0; i < ls.getArray('GameSettings')[0]; i++) {
     const lat = 3.670823 + Math.sin((Math.PI * 2) * (i / ls.getArray('GameSettings')[0])) * 0.0008;
     const lon = 51.087544 + Math.cos((Math.PI * 2) * (i / ls.getArray('GameSettings')[0])) * 0.0008;
@@ -50,18 +64,18 @@ export default async () => {
   }
 
   const interval = setInterval(async () => {
+    let tagged = false;
     for (let i = 0; i < ls.getArray('GameSettings')[0]; i++) {
       // tikken registreren
-      if (dsArray[i].type === 'bad') {
+      if (dsArray[i].type === 'bad' && !tagged) {
         for (let j = 0; j < ls.getArray('GameSettings')[0]; j++) {
-          if (dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon) < 0.0003
+          if (dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon) < 0.0004
           && dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon) !== 0) {
-            console.log(dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon));
+            tagged = true;
             dsArray[i].type = 'good';
-            // eslint-disable-next-line no-param-reassign
             dsArray[j].type = 'bad';
             console.log('ticked');
-            console.log(`tikekr is nu: player${j}`);
+            console.log(`tikker is nu: player${j}`);
 
             mapBox.map.removeLayer(`Player${i}`);
             mapBox.map.removeLayer(`Player${j}`);
@@ -137,12 +151,23 @@ export default async () => {
         if (doc.exists) {
           const { timeplayed } = doc.data();
           const totaltime = timeplayed + dsArray[0].timeplayed;
-          const data = { timeplayed: totaltime };
+          const data = { timeplayed: totaltime, lobbycode: '' };
           App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
         }
       })
       .catch((err) => {
         console.log('Error getting document', err);
+      });
+
+    await App.firebase.getFirestore().collection('players').where('lobbycode', '==', ls.getItem('Code').toUpperCase()).get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+          App.firebase.deleteOnUID(doc.id);
+        });
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
       });
     clearInterval(interval);
     clearInterval(interval2);

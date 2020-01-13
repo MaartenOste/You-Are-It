@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable max-len */
 import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
@@ -16,43 +17,40 @@ export default async () => {
   const ls = new LocalStorage(localStorage);
   const d = new DataSeeder();
 
+  let NOPlayers;
   if (ls.getItem('UserType') === 'player') {
-    ls.setArray('GameSettings', [5 + Math.floor(Math.random() * 5), 'normal', 10, 5]);
+    NOPlayers = 8 + Math.floor(Math.random() * 5);
+  } else {
+    NOPlayers = ls.getArray('GameSettings')[0] - 1;
   }
-
+  let profiles = await d.randomPersons(NOPlayers);
   document.getElementById('code').innerHTML = `CODE: ${ls.getItem('Code').toUpperCase()}`;
 
 
-  const profiles = await d.randomPersons(ls.getArray('GameSettings')[0] - 1);
+  ls.setArray('GameSettings', [NOPlayers, 'normal', 10, 5]);
+  profiles.forEach((profile) => {
+    App.firebase.addUser(profile, '', ls.getItem('Code').toUpperCase(), DataSeeder.randomUID());
+  });
 
-  /* // real players:
+
   await App.firebase.getFirestore().collection('players').where('lobbycode', '==', ls.getItem('Code').toUpperCase()).get()
     .then((querySnapshot) => {
+      profiles = [];
       querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, ' => ', doc.data());
+        profiles.push(doc.data());
       });
     })
     .catch((error) => {
       console.log('Error getting documents: ', error);
     });
 
-
-  App.firebase.getAuth().onAuthStateChanged((user) => {
-    if (user) {
-      const mail = App.firebase.getAuth().currentUser.email;
-      const name = mail.substr(0, mail.indexOf('@'));
-      console.log(name);
-    }
-  });
-  */
-
-  profiles.forEach((name) => {
+  profiles.forEach((profile) => {
     const div = document.createElement('div');
     div.className = 'm-setting';
     const div2 = document.createElement('div');
     div2.className = 'a-statlabel';
-    div2.innerText = name;
+    div2.innerText = profile.name;
     div.appendChild(div2);
     document.getElementsByClassName('m-players')[0].appendChild(div);
   });
@@ -70,12 +68,11 @@ export default async () => {
   document.getElementsByClassName('a-title')[0].innerText = `${ls.getArray('GameSettings')[1]} mode`;
 
   document.getElementById('start').addEventListener('click', async () => {
-    let data = 'yeet';
+    let data;
     const { uid } = App.firebase.getAuth().currentUser;
     await App.firebase.getFirestore().collection('players').doc(uid).get()
       .then((doc) => {
         if (!doc.exists) {
-          console.log('No such document!');
           data = { games: 1 };
         } else {
           data = { games: doc.data().games + 1 };
