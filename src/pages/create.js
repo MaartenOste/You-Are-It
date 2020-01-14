@@ -16,6 +16,8 @@ export default () => {
   App.render(createTemplate({ title }));
 
   const buttons = document.getElementsByClassName('a-button_menu');
+  ls.setItem('UserType', 'mod');
+
   buttons[0].addEventListener('click', () => {
     if (document.getElementById('persons').value === '') {
       settings.push(5);
@@ -30,8 +32,9 @@ export default () => {
       settings.push(document.getElementById('radius').value);
     }
     const code = DataSeeder.randomCode();
+    const data = { lobbycode: code };
+    App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
     ls.setItem('Code', code);
     ls.setArray('GameSettings', settings);
   });
-  ls.setItem('UserType', 'mod');
 };

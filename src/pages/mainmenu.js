@@ -3,6 +3,7 @@ import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
 import LocationManager from '../lib/core/LocationManager';
+import Notificator from '../lib/core/Notification';
 
 const mainmenuTemplate = require('../templates/mainmenu.hbs');
 
@@ -13,6 +14,8 @@ export default () => {
   lm.getCurrentPosition();
   // set the title of this page
   const title = `${SITE_TITLE} is ready to go!`;
+  Notificator.permissionRequest();
+
 
   // render the template
   App.render(mainmenuTemplate({ title }));

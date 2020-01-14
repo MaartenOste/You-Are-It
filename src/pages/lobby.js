@@ -20,6 +20,7 @@ export default async () => {
   let NOPlayers;
   if (ls.getItem('UserType') === 'player') {
     NOPlayers = 8 + Math.floor(Math.random() * 5);
+    ls.setArray('GameSettings', [NOPlayers, 'normal', 10, 5]);
   } else {
     NOPlayers = ls.getArray('GameSettings')[0] - 1;
   }
@@ -27,7 +28,6 @@ export default async () => {
   document.getElementById('code').innerHTML = `CODE: ${ls.getItem('Code').toUpperCase()}`;
 
 
-  ls.setArray('GameSettings', [NOPlayers, 'normal', 10, 5]);
   profiles.forEach((profile) => {
     App.firebase.addUser(profile, '', ls.getItem('Code').toUpperCase(), DataSeeder.randomUID());
   });
@@ -54,14 +54,6 @@ export default async () => {
     div.appendChild(div2);
     document.getElementsByClassName('m-players')[0].appendChild(div);
   });
-
-  const div = document.createElement('div');
-  div.className = 'm-setting';
-  const div2 = document.createElement('div');
-  div2.className = 'a-statlabel';
-  div2.innerText = 'you';
-  div.appendChild(div2);
-  document.getElementsByClassName('m-players')[0].insertBefore(div, document.getElementsByClassName('m-players')[0].firstChild);
 
   document.body.style.backgroundImage = '';
 
