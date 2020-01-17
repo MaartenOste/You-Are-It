@@ -70,6 +70,21 @@ class FireBase {
       router.navigate('/login');
     }
   }
+
+  checkConnection() {
+    const connection = window.navigator.onLine;
+    if (connection === false) {
+      const router = new Router(window.location.origin, consts.ROUTER_HASH);
+      router.navigate('/offline');
+    }
+  }
+
+  reCheckConnection() {
+    const connection = window.navigator.onLine;
+    if (connection === true) {
+      window.history.back();
+    }
+  }
 }
 
 export default FireBase;

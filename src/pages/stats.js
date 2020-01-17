@@ -3,6 +3,8 @@ import App from '../lib/App';
 const statsTemplate = require('../templates/stats.hbs');
 
 export default () => {
+  App.firebase.checkConnection();
+
   // check if user
   App.firebase.checkUser();
 

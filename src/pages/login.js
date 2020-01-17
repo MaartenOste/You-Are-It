@@ -9,6 +9,7 @@ import LocalStorage from '../lib/core/LocalStorage';
 const loginTemplate = require('../templates/login.hbs');
 
 export default () => {
+  App.firebase.checkConnection();
   // render the template
   App.render(loginTemplate());
   const ls = new LocalStorage(localStorage);

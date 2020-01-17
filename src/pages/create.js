@@ -5,6 +5,8 @@ import DataSeeder from '../lib/core/Dataseeder';
 const createTemplate = require('../templates/create game.hbs');
 
 export default () => {
+  App.firebase.checkConnection();
+
   const ls = new LS(localStorage);
   const settings = [];
 

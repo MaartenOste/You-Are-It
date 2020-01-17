@@ -9,6 +9,8 @@ import App from '../lib/App';
 const registerTemplate = require('../templates/register.hbs');
 
 export default () => {
+  App.firebase.checkConnection();
+
   // set the title of this page
   const title = `${SITE_TITLE} is ready to go!`;
 

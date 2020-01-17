@@ -10,6 +10,7 @@ import CreatePage from './pages/create';
 import LobbyPage from './pages/lobby';
 import Game from './pages/game';
 import ChoosePage from './pages/choose';
+import OfflinePage from './pages/offline';
 
 export default [
   { path: '/login', view: LoginPage },
@@ -23,4 +24,5 @@ export default [
   { path: '/lobby', view: LobbyPage },
   { path: '/game', view: Game },
   { path: '/choose', view: ChoosePage },
+  { path: '/offline', view: OfflinePage },
 ];

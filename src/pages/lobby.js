@@ -7,6 +7,8 @@ import LocalStorage from '../lib/core/LocalStorage';
 const lobbyTemplate = require('../templates/lobby.hbs');
 
 export default async () => {
+  App.firebase.checkConnection();
+
   // check if user
   App.firebase.checkUser();
 

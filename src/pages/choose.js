@@ -1,16 +1,14 @@
 /* eslint-disable max-len */
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
 
 const chooseTemplate = require('../templates/choose.hbs');
 
 export default () => {
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
+  App.firebase.checkConnection();
 
   // render the template
-  App.render(chooseTemplate({ title }));
+  App.render(chooseTemplate());
 
   const ls = new LocalStorage(localStorage);
   function chooseSide(event) {
