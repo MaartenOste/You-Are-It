@@ -1,5 +1,4 @@
 
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
 import LocationManager from '../lib/core/LocationManager';
@@ -8,17 +7,18 @@ import Notificator from '../lib/core/Notification';
 const mainmenuTemplate = require('../templates/mainmenu.hbs');
 
 export default () => {
+  // check if user
+  App.firebase.checkUser();
+
   const ls = new LocalStorage(localStorage);
   // eslint-disable-next-line no-unused-vars
   const lm = new LocationManager();
   lm.getCurrentPosition();
   // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
   Notificator.permissionRequest();
 
-
   // render the template
-  App.render(mainmenuTemplate({ title }));
+  App.render(mainmenuTemplate());
   if (ls.getItem('theme') === 'good') {
     document.body.style.backgroundColor = '#4485c7';
     document.getElementById('theme').style.backgroundColor = '#b92234';
@@ -56,6 +56,7 @@ export default () => {
   document.getElementsByClassName('a-button_menu')[3].addEventListener('click', () => {
     logout();
   });
+
 
   App.firebase.getAuth().onAuthStateChanged(async (user) => {
     if (user) {

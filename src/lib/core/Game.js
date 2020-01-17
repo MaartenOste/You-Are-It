@@ -75,7 +75,7 @@ class Game {
               tagged = true;
               dsArray[i].type = 'good';
               dsArray[j].type = 'bad';
-			  this.showTagged(profiles[j].name);
+              this.showTagged(profiles[j].name);
               mapBox.map.removeLayer(profiles[i].name);
               mapBox.map.removeLayer(profiles[j].name);
               mapBox.map.removeSource(profiles[i].name);
@@ -108,7 +108,7 @@ class Game {
           }
         }
       }
-    }, 2000);
+    }, 5000);
 
 
     const interval2 = setInterval(() => {
@@ -367,8 +367,6 @@ class Game {
       mapBox.map.setStyle('mapbox://styles/mapbox/outdoors-v11');
     }
     for (let i = 0; i < profiles.length; i++) {
-      console.log(`add ${profiles[i].name}`);
-
 	  mapBox.addPic(dsArray[i].getPos().lat, dsArray[i].getPos().lon, profiles[i].name, dsArray[i].type);
     }
   }

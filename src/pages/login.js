@@ -3,18 +3,14 @@
  * The Home Page
  */
 
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
 
 const loginTemplate = require('../templates/login.hbs');
 
 export default () => {
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
-
   // render the template
-  App.render(loginTemplate({ title }));
+  App.render(loginTemplate());
   const ls = new LocalStorage(localStorage);
   if (ls.getItem('theme') === 'undefined' || ls.getItem('theme') === 'bad') {
     const badcolor = 'rgb(185, 34, 52)';

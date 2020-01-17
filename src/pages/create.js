@@ -1,4 +1,3 @@
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LS from '../lib/core/LocalStorage';
 import DataSeeder from '../lib/core/Dataseeder';
@@ -9,11 +8,12 @@ export default () => {
   const ls = new LS(localStorage);
   const settings = [];
 
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
+  // check if user
+  App.firebase.checkUser();
+
 
   // render the template
-  App.render(createTemplate({ title }));
+  App.render(createTemplate());
 
   const buttons = document.getElementsByClassName('a-button_menu');
   ls.setItem('UserType', 'mod');

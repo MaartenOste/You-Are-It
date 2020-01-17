@@ -1,6 +1,5 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable max-len */
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import DataSeeder from '../lib/core/Dataseeder';
 import LocalStorage from '../lib/core/LocalStorage';
@@ -8,11 +7,11 @@ import LocalStorage from '../lib/core/LocalStorage';
 const lobbyTemplate = require('../templates/lobby.hbs');
 
 export default async () => {
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
+  // check if user
+  App.firebase.checkUser();
 
   // render the template
-  App.render(lobbyTemplate({ title }));
+  App.render(lobbyTemplate());
 
   const ls = new LocalStorage(localStorage);
   const d = new DataSeeder();

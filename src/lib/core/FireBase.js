@@ -4,10 +4,11 @@
  *
  * @author Tim De Paepe <tim.depaepe@arteveldehs.be>
  */
-
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import Router from './Router';
+import * as consts from '../../consts';
 
 class FireBase {
   constructor(apiKey, projectId, messagingSenderId) {
@@ -61,6 +62,13 @@ class FireBase {
 
   deleteOnUID(uid) {
     this.getFirestore().collection('players').doc(uid).delete();
+  }
+
+  checkUser() {
+    if (this.getAuth().currentUser == null) {
+      const router = new Router(window.location.origin, consts.ROUTER_HASH);
+      router.navigate('/login');
+    }
   }
 }
 

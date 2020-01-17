@@ -27,7 +27,6 @@ export default () => {
   App.firebase.getAuth().onAuthStateChanged((user) => {
     if (user) {
       App.router.navigate('/mainmenu');
-      console.log(`logged in with: ${App.firebase.getAuth().currentUser.email}`);
     } else {
       document.addEventListener('click', chooseSide);
     }

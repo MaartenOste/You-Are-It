@@ -1,12 +1,11 @@
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 
 const playTemplate = require('../templates/play.hbs');
 
 export default () => {
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
+  // check if user
+  App.firebase.checkUser();
 
   // render the template
-  App.render(playTemplate({ title }));
+  App.render(playTemplate());
 };

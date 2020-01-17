@@ -1,16 +1,13 @@
 /* eslint-disable no-alert */
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
 
 const joinTemplate = require('../templates/join.hbs');
 
 export default () => {
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
-
+  App.firebase.checkUser();
   // render the template
-  App.render(joinTemplate({ title }));
+  App.render(joinTemplate());
   const ls = new LocalStorage(localStorage);
   ls.setItem('UserType', 'player');
 

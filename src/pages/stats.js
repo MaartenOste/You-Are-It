@@ -1,19 +1,17 @@
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 
 const statsTemplate = require('../templates/stats.hbs');
 
 export default () => {
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
+  // check if user
+  App.firebase.checkUser();
 
   // render the template
-  App.render(statsTemplate({ title }));
+  App.render(statsTemplate());
 
   App.firebase.getAuth().onAuthStateChanged(async (user) => {
     if (user) {
       const userid = App.firebase.getAuth().currentUser.uid;
-
       await App.firebase.getFirestore().collection('players').doc(userid).get()
         .then((doc) => {
           if (doc.exists) {
