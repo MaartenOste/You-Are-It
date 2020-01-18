@@ -86,7 +86,6 @@ export default async () => {
     document.getElementById('start').style.display = 'none';
 
     timeout = setTimeout(async () => {
-      StartGame();
       App.router.navigate('/game');
     }, 10000);
   }
