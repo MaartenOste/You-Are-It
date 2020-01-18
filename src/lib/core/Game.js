@@ -50,7 +50,7 @@ class Game {
         console.log('Error getting documents: ', error);
       });
 
-    for (let i = 0; i < ls.getArray('GameSettings')[0]; i++) {
+    for (let i = 0; i < profiles.length; i++) {
       const lat = 3.670823 + Math.sin((Math.PI * 2) * (i / ls.getArray('GameSettings')[0])) * 0.0008;
       const lon = 51.087544 + Math.cos((Math.PI * 2) * (i / ls.getArray('GameSettings')[0])) * 0.0008;
 
@@ -64,12 +64,12 @@ class Game {
     }
 
     const interval = setInterval(async () => {
-    // tagged variabele om instant terugtikken te vermijden
+      // tagged variabele om instant terugtikken te vermijden
       let tagged = false;
-      for (let i = 0; i < ls.getArray('GameSettings')[0]; i++) {
+      for (let i = 0; i < profiles.length; i++) {
       // tikken registreren
         if (dsArray[i].type === 'bad' && !tagged) {
-          for (let j = 0; j < ls.getArray('GameSettings')[0]; j++) {
+          for (let j = 0; j < profiles.length; j++) {
             if (dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon) < 0.0004
           && dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon) !== 0) {
               tagged = true;
@@ -293,7 +293,8 @@ class Game {
       for (let i = 0; i < profiles.length; i++) {
       // tikken registreren
         if (dsArray[i].type === turn && !tagged) {
-          for (let j = 0; j < ls.getArray('GameSettings')[0]; j++) {
+          // hereeee
+          for (let j = 0; j < profiles.length; j++) {
             if (dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon) < 0.0004
           && dsArray[i].calcDistanceTo(dsArray[j].lat, dsArray[j].lon) !== 0 && dsArray[i].type !== dsArray[j].type) {
               tagged = true;
