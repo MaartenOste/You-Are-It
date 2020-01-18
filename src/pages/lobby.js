@@ -26,7 +26,8 @@ export default async () => {
     NOPlayers = ls.getArray('GameSettings')[0] - 1;
   }
   let profiles = await d.randomPersons(NOPlayers);
-  document.getElementById('code').innerHTML = `CODE: ${ls.getItem('Code').toUpperCase()}`;
+
+  document.getElementById('code').innerText = `CODE: ${ls.getItem('Code').toUpperCase()}`;
 
 
   profiles.forEach((profile) => {
@@ -38,7 +39,7 @@ export default async () => {
     .then((querySnapshot) => {
       profiles = [];
       querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
+        // doc.data() is never undefined for query doc snapshots
         profiles.push(doc.data());
       });
     })
@@ -53,14 +54,15 @@ export default async () => {
     div2.className = 'a-statlabel';
     div2.innerText = profile.name;
     div.appendChild(div2);
-    document.getElementsByClassName('m-players')[0].appendChild(div);
+    document.getElementsByClassName('m-players_lobby')[0].appendChild(div);
   });
 
   document.body.style.backgroundImage = '';
 
   document.getElementsByClassName('a-title')[0].innerText = `${ls.getArray('GameSettings')[1]} mode`;
 
-  document.getElementById('start').addEventListener('click', async () => {
+
+  async function StartGame() {
     let data;
     const { uid } = App.firebase.getAuth().currentUser;
     await App.firebase.getFirestore().collection('players').doc(uid).get()
@@ -75,9 +77,23 @@ export default async () => {
         console.log('Error getting document', err);
       });
     App.firebase.setStat(uid, data);
-  });
+  }
+
+  document.getElementById('start').addEventListener('click', StartGame());
+
+  let timeout;
+  if (ls.getItem('UserType') === 'player') {
+    document.getElementById('start').style.display = 'none';
+
+    timeout = setTimeout(async () => {
+      StartGame();
+      App.router.navigate('/game');
+    }, 10000);
+  }
+
 
   document.getElementById('quit').addEventListener('click', async () => {
+    clearTimeout(timeout);
     const userid = App.firebase.getAuth().currentUser.uid;
 
     await App.firebase.getFirestore().collection('players').doc(userid).get()
