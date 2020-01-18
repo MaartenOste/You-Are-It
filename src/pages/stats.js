@@ -31,7 +31,6 @@ export default () => {
             timeplayed -= mnts * 60;
 
             document.getElementById('timeplayed').innerText = `${days}d ${hrs}h ${mnts}m ${timeplayed}s`;
-            document.getElementById('wins').innerText = doc.data().wins;
             document.getElementById('uname').innerText = doc.data().name;
             const img = document.createElement('img');
             if (App.firebase.getAuth().currentUser.photoURL) {

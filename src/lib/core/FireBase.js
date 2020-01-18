@@ -46,7 +46,6 @@ class FireBase {
   }
 
   addUser(name, location, lobbycode, uid) {
-    console.log('adding user');
     this.getFirestore().collection('players').doc(uid).set({
       lobbycode,
       location,
@@ -71,7 +70,6 @@ class FireBase {
 
   checkUser() {
     if (this.getAuth().currentUser == null) {
-      console.log('no user logged in');
       const router = new Router(window.location.origin, consts.ROUTER_HASH);
       router.navigate('/login');
     }
@@ -88,14 +86,13 @@ class FireBase {
   reCheckConnection() {
     const connection = window.navigator.onLine;
     if (connection === true) {
-      window.history.back();
+      const router = new Router(window.location.origin, consts.ROUTER_HASH);
+      router.navigate('/mainmenu');
     }
   }
 
   async getHistory() {
-    const history = [];
-    console.log(this.getAuth().currentUser.uid);
-
+    let history = [];
     await this.getFirestore().collection('match history').where('user', '==', this.getAuth().currentUser.uid).get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -105,7 +102,22 @@ class FireBase {
       .catch((error) => {
         console.log('Error getting documents: ', error);
       });
+    history = history.sort(this.compareMatches);
+
     return history;
+  }
+
+  compareMatches(a, b) {
+    const dateA = a.compare;
+    const dateB = b.compare;
+
+    let comparison = 0;
+    if (dateA < dateB) {
+      comparison = 1;
+    } else if (dateA > dateB) {
+      comparison = -1;
+    }
+    return comparison;
   }
 }
 

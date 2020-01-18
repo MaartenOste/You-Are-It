@@ -296,9 +296,7 @@ class Game {
 	  }
 	  counter += 2;
 
-      console.log(counter);
-
-	  if (counter === 10) {
+	  if (counter === 60) {
         if (turn === 'bad') {
 		  turn = 'good';
 		  this.showTurnSwitch(turn, mapBox, profiles, dsArray);
@@ -404,11 +402,13 @@ class Game {
       document.getElementById('timer').style.color = '#FFFFFF';
     } else {
       mapBox.map.setStyle('mapbox://styles/mapbox/outdoors-v11');
+      document.getElementById('timer').style.color = '#000000';
     }
     for (let i = 0; i < profiles.length; i++) {
       mapBox.addPic(dsArray[i].getPos().lat, dsArray[i].getPos().lon, profiles[i].name, dsArray[i].type);
     }
   }
+
 
   static async addToHistory(mode, profiles, time, datum) {
     const names = [];
@@ -417,7 +417,7 @@ class Game {
     });
     const user = App.firebase.getAuth().currentUser.uid;
     const data = {
-      user, gamemode: mode, players: names, timeplayed: time, date: datum,
+      user, gamemode: mode, players: names, timeplayed: time, date: datum, compare: Date.now(),
     };
 
     await App.firebase.setHistory(data);

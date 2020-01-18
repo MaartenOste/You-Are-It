@@ -8,7 +8,7 @@ import App from '../lib/App';
 const historyTemplate = require('../templates/history.hbs');
 
 export default async () => {
-  App.firebase.checkConnection();
+  App.firebase.checkConnection('history');
 
   // check if user
   App.firebase.checkUser();
