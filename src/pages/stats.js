@@ -20,6 +20,7 @@ export default () => {
             document.getElementById('games').innerText = doc.data().games;
             let { timeplayed } = doc.data();
 
+
             // let timeplayed = parseInt(123456, 10);
 
             const days = Math.floor(timeplayed / (3600 * 24));

@@ -76,4 +76,30 @@ export default async () => {
       });
     App.firebase.setStat(uid, data);
   });
+
+  document.getElementById('quit').addEventListener('click', async () => {
+    const userid = App.firebase.getAuth().currentUser.uid;
+
+    await App.firebase.getFirestore().collection('players').doc(userid).get()
+      .then((doc) => {
+        if (doc.exists) {
+          const data = { lobbycode: '' };
+          App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
+        }
+      })
+      .catch((err) => {
+        console.log('Error getting document', err);
+      });
+
+    await App.firebase.getFirestore().collection('players').where('lobbycode', '==', ls.getItem('Code').toUpperCase()).get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          App.firebase.deleteOnUID(doc.id);
+        });
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });
+  });
 };

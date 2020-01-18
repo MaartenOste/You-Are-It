@@ -46,6 +46,7 @@ class FireBase {
   }
 
   addUser(name, location, lobbycode, uid) {
+    console.log('adding user');
     this.getFirestore().collection('players').doc(uid).set({
       lobbycode,
       location,
@@ -60,12 +61,17 @@ class FireBase {
     this.getFirestore().collection('players').doc(uid).set(data, { merge: true });
   }
 
+  setHistory(data) {
+    this.getFirestore().collection('match history').add(data);
+  }
+
   deleteOnUID(uid) {
     this.getFirestore().collection('players').doc(uid).delete();
   }
 
   checkUser() {
     if (this.getAuth().currentUser == null) {
+      console.log('no user logged in');
       const router = new Router(window.location.origin, consts.ROUTER_HASH);
       router.navigate('/login');
     }
@@ -84,6 +90,22 @@ class FireBase {
     if (connection === true) {
       window.history.back();
     }
+  }
+
+  async getHistory() {
+    const history = [];
+    console.log(this.getAuth().currentUser.uid);
+
+    await this.getFirestore().collection('match history').where('user', '==', this.getAuth().currentUser.uid).get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          history.push(doc.data());
+        });
+      })
+      .catch((error) => {
+        console.log('Error getting documents: ', error);
+      });
+    return history;
   }
 }
 

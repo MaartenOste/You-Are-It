@@ -19,7 +19,7 @@ export default () => {
       ls.setItem('Code', code);
       const data = { lobbycode: code };
       App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
-      App.router.navigate('lobby');
+      App.router.navigate('/lobby');
     } else { window.alert('The code has to be 4 letters'); }
   });
 };

@@ -144,11 +144,12 @@ class Game {
 
     document.getElementById('confirm2').addEventListener('click', async () => {
       const userid = App.firebase.getAuth().currentUser.uid;
+      let timeplayed;
 
       await App.firebase.getFirestore().collection('players').doc(userid).get()
         .then((doc) => {
           if (doc.exists) {
-            const { timeplayed } = doc.data();
+            timeplayed = doc.data().timeplayed;
             const totaltime = timeplayed + dsArray[0].timeplayed;
             const data = { timeplayed: totaltime, lobbycode: '' };
             App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
@@ -168,9 +169,24 @@ class Game {
         .catch((error) => {
           console.log('Error getting documents: ', error);
         });
+
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1; // January is 0!
+
+      const yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = `0${dd}`;
+      }
+      if (mm < 10) {
+        mm = `0${mm}`;
+      }
+      today = `${dd}/${mm}/${yyyy}`;
+      await this.addToHistory('normal', profiles, dsArray[0].timeplayed, today);
+
       clearInterval(interval);
       clearInterval(interval2);
-      App.router.navigate('mainmenu');
+      App.router.navigate('/mainmenu');
     });
   }
 
@@ -191,7 +207,7 @@ class Game {
     const mapBoxOptions = {
       container: 'mapbox',
       center: [3.670823, 51.087544],
-      style: 'mapbox://styles/mapbox/dark-v10',
+      style: 'mapbox://styles/mapbox/outdoors-v11',
       zoom: 16,
       maxBounds: bounds,
     };
@@ -207,7 +223,6 @@ class Game {
       .then((querySnapshot) => {
         profiles = [];
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
           profiles.push(doc.data());
         });
       })
@@ -229,7 +244,7 @@ class Game {
     }
 
     let counter = 0;
-    let turn = 'bad';
+    let turn = 'good';
     const interval = setInterval(async () => {
     // tagged variabele om instant terugtikken te vermijden
 	  let tagged = false;
@@ -267,15 +282,23 @@ class Game {
             mapBox.map.removeSource(profiles[i].name);
             if (dsArray[i].type === 'bad') {
               mapBox.updatePicBad(dsArray[i].getPos().lat, dsArray[i].getPos().lon, profiles[i].name);
+              if (turn === 'bad') {
+                mapBox.map.setPaintProperty(profiles[i].name, 'text-color', '#FFFFFF');
+              }
             } else {
               mapBox.updatePicGood(dsArray[i].getPos().lat, dsArray[i].getPos().lon, profiles[i].name);
+              if (turn === 'bad') {
+                mapBox.map.setPaintProperty(profiles[i].name, 'text-color', '#FFFFFF');
+              }
             }
           }
         }
 	  }
 	  counter += 2;
 
-	  if (counter === 6) {
+      console.log(counter);
+
+	  if (counter === 10) {
         if (turn === 'bad') {
 		  turn = 'good';
 		  this.showTurnSwitch(turn, mapBox, profiles, dsArray);
@@ -321,11 +344,12 @@ class Game {
 
     document.getElementById('confirm2').addEventListener('click', async () => {
       const userid = App.firebase.getAuth().currentUser.uid;
+      let timeplayed;
 
       await App.firebase.getFirestore().collection('players').doc(userid).get()
         .then((doc) => {
           if (doc.exists) {
-            const { timeplayed } = doc.data();
+            timeplayed = doc.data().timeplayed;
             const totaltime = timeplayed + dsArray[0].timeplayed;
             const data = { timeplayed: totaltime, lobbycode: '' };
             App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
@@ -344,10 +368,24 @@ class Game {
         .catch((error) => {
           console.log('Error getting documents: ', error);
         });
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1; // January is 0!
+
+      const yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = `0${dd}`;
+      }
+      if (mm < 10) {
+        mm = `0${mm}`;
+      }
+      today = `${dd}/${mm}/${yyyy}`;
+
+      await this.addToHistory('battle', profiles, dsArray[0].timeplayed, today);
 
       clearInterval(interval);
       clearInterval(interval2);
-      App.router.navigate('mainmenu');
+      App.router.navigate('/mainmenu');
     });
   }
 
@@ -362,13 +400,27 @@ class Game {
   static showTurnSwitch(turn, mapBox, profiles, dsArray) {
     Notificator.notification('TAG!', `The ${turn} side are now the taggers!`);
     if (turn === 'bad') {
-	  mapBox.map.setStyle('mapbox://styles/mapbox/dark-v10');
+      mapBox.map.setStyle('mapbox://styles/mapbox/dark-v10');
+      document.getElementById('timer').style.color = '#FFFFFF';
     } else {
       mapBox.map.setStyle('mapbox://styles/mapbox/outdoors-v11');
     }
     for (let i = 0; i < profiles.length; i++) {
-	  mapBox.addPic(dsArray[i].getPos().lat, dsArray[i].getPos().lon, profiles[i].name, dsArray[i].type);
+      mapBox.addPic(dsArray[i].getPos().lat, dsArray[i].getPos().lon, profiles[i].name, dsArray[i].type);
     }
+  }
+
+  static async addToHistory(mode, profiles, time, datum) {
+    const names = [];
+    profiles.forEach((profile) => {
+      names.push(profile.name);
+    });
+    const user = App.firebase.getAuth().currentUser.uid;
+    const data = {
+      user, gamemode: mode, players: names, timeplayed: time, date: datum,
+    };
+
+    await App.firebase.setHistory(data);
   }
 }
 

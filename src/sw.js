@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 
 // set the debug state
-const DEBUG = true;
+const DEBUG = false;
 
 /**
  * When Service Worker is installed

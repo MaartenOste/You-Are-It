@@ -2,7 +2,7 @@
 import LoginPage from './pages/login';
 import MainMenu from './pages/mainmenu';
 import RegisterPage from './pages/register';
-import SettingsPage from './pages/settings';
+import HistoryPage from './pages/history';
 import StatsPage from './pages/stats';
 import PlayPage from './pages/play';
 import JoinPage from './pages/join';
@@ -16,7 +16,7 @@ export default [
   { path: '/login', view: LoginPage },
   { path: '/mainmenu', view: MainMenu },
   { path: '/register', view: RegisterPage },
-  { path: '/settings', view: SettingsPage },
+  { path: '/history', view: HistoryPage },
   { path: '/stats', view: StatsPage },
   { path: '/play', view: PlayPage },
   { path: '/join', view: JoinPage },
