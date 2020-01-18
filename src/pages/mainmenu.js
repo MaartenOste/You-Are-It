@@ -7,6 +7,7 @@ import Notificator from '../lib/core/Notification';
 const mainmenuTemplate = require('../templates/mainmenu.hbs');
 
 export default () => {
+  // check if internet connection
   App.firebase.checkConnection();
 
   // check if user

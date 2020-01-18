@@ -3,6 +3,7 @@ import App from '../lib/App';
 const statsTemplate = require('../templates/stats.hbs');
 
 export default () => {
+  // check if internet connection
   App.firebase.checkConnection();
 
   // check if user

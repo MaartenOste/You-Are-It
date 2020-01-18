@@ -5,6 +5,7 @@ import LocalStorage from '../lib/core/LocalStorage';
 const chooseTemplate = require('../templates/choose.hbs');
 
 export default () => {
+  // check if internet connection
   App.firebase.checkConnection();
 
   // render the template
@@ -12,6 +13,7 @@ export default () => {
 
   const ls = new LocalStorage(localStorage);
   function chooseSide(event) {
+    // register where the user clicked
     if (event.clientX > window.screen.width / 2 && event.clientY > window.screen.height / 2) {
       ls.setItem('theme', 'bad');
       App.router.navigate('/login');
@@ -22,6 +24,7 @@ export default () => {
       document.removeEventListener('click', chooseSide);
     }
   }
+
   App.firebase.getAuth().onAuthStateChanged((user) => {
     if (user) {
       App.router.navigate('/mainmenu');

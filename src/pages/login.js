@@ -1,14 +1,11 @@
 /* eslint-disable no-alert */
-/**
- * The Home Page
- */
-
 import App from '../lib/App';
 import LocalStorage from '../lib/core/LocalStorage';
 
 const loginTemplate = require('../templates/login.hbs');
 
 export default () => {
+  // check if internet connection
   App.firebase.checkConnection();
   // render the template
   App.render(loginTemplate());

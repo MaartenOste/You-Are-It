@@ -5,17 +5,17 @@ import DataSeeder from '../lib/core/Dataseeder';
 const createTemplate = require('../templates/create game.hbs');
 
 export default () => {
+  // check if internet connection
   App.firebase.checkConnection();
-
-  const ls = new LS(localStorage);
-  const settings = [];
 
   // check if user
   App.firebase.checkUser();
 
-
   // render the template
   App.render(createTemplate());
+
+  const ls = new LS(localStorage);
+  const settings = [];
 
   const buttons = document.getElementsByClassName('a-button_menu');
   ls.setItem('UserType', 'mod');

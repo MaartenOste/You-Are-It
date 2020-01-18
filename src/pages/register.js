@@ -1,21 +1,14 @@
 /* eslint-disable no-alert */
-/**
- * The Home Page
- */
-
-import { SITE_TITLE } from '../consts';
 import App from '../lib/App';
 
 const registerTemplate = require('../templates/register.hbs');
 
 export default () => {
+  // check if internet connection
   App.firebase.checkConnection();
 
-  // set the title of this page
-  const title = `${SITE_TITLE} is ready to go!`;
-
   // render the template
-  App.render(registerTemplate({ title }));
+  App.render(registerTemplate());
 
   function signup() {
     const email = document.getElementById('emailfield').value;

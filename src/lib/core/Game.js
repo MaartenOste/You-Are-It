@@ -111,11 +111,53 @@ class Game {
     }, 5000);
 
 
-    const interval2 = setInterval(() => {
+    const interval2 = setInterval(async () => {
       document.getElementById('timer').innerText = dsArray[0].time;
       if (dsArray[0].time === '00:00') {
+        const userid = App.firebase.getAuth().currentUser.uid;
+        let timeplayed;
+
+        await App.firebase.getFirestore().collection('players').doc(userid).get()
+          .then((doc) => {
+            if (doc.exists) {
+              timeplayed = doc.data().timeplayed;
+              const totaltime = timeplayed + dsArray[0].timeplayed;
+              const data = { timeplayed: totaltime, lobbycode: '' };
+              App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
+            }
+          })
+          .catch((err) => {
+            console.log('Error getting document', err);
+          });
+
+        await App.firebase.getFirestore().collection('players').where('lobbycode', '==', ls.getItem('Code').toUpperCase()).get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              App.firebase.deleteOnUID(doc.id);
+            });
+          })
+          .catch((error) => {
+            console.log('Error getting documents: ', error);
+          });
+
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1; // January is 0!
+
+        const yyyy = today.getFullYear();
+        if (dd < 10) {
+          dd = `0${dd}`;
+        }
+        if (mm < 10) {
+          mm = `0${mm}`;
+        }
+        today = `${dd}/${mm}/${yyyy}`;
+        await this.addToHistory('normal', profiles, dsArray[0].timeplayed, today);
+
         clearInterval(interval);
         clearInterval(interval2);
+        App.router.navigate('/mainmenu');
       }
     }, 1000);
 
@@ -309,11 +351,52 @@ class Game {
     }, 2000);
 
 
-    const interval2 = setInterval(() => {
+    const interval2 = setInterval(async () => {
       document.getElementById('timer').innerText = dsArray[0].time;
       if (dsArray[0].time === '00:00') {
+        const userid = App.firebase.getAuth().currentUser.uid;
+        let timeplayed;
+
+        await App.firebase.getFirestore().collection('players').doc(userid).get()
+          .then((doc) => {
+            if (doc.exists) {
+              timeplayed = doc.data().timeplayed;
+              const totaltime = timeplayed + dsArray[0].timeplayed;
+              const data = { timeplayed: totaltime, lobbycode: '' };
+              App.firebase.setStat(App.firebase.getAuth().currentUser.uid, data);
+            }
+          })
+          .catch((err) => {
+            console.log('Error getting document', err);
+          });
+
+        await App.firebase.getFirestore().collection('players').where('lobbycode', '==', ls.getItem('Code').toUpperCase()).get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              App.firebase.deleteOnUID(doc.id);
+            });
+          })
+          .catch((error) => {
+            console.log('Error getting documents: ', error);
+          });
+        let today = new Date();
+        let dd = today.getDate();
+        let mm = today.getMonth() + 1; // January is 0!
+
+        const yyyy = today.getFullYear();
+        if (dd < 10) {
+          dd = `0${dd}`;
+        }
+        if (mm < 10) {
+          mm = `0${mm}`;
+        }
+        today = `${dd}/${mm}/${yyyy}`;
+
+        await this.addToHistory('battle', profiles, dsArray[0].timeplayed, today);
+
         clearInterval(interval);
         clearInterval(interval2);
+        App.router.navigate('/mainmenu');
       }
     }, 1000);
 

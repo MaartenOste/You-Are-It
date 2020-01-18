@@ -20,7 +20,7 @@ export default async () => {
 
   let NOPlayers;
   if (ls.getItem('UserType') === 'player') {
-    NOPlayers = 8 + Math.floor(Math.random() * 5);
+    NOPlayers = 4 + Math.floor(Math.random() * 6);
     ls.setArray('GameSettings', [NOPlayers, 'normal', 10, 5]);
   } else {
     NOPlayers = ls.getArray('GameSettings')[0] - 1;

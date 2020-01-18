@@ -5,6 +5,7 @@ import LocalStorage from '../lib/core/LocalStorage';
 const joinTemplate = require('../templates/join.hbs');
 
 export default () => {
+  // check if internet connections
   App.firebase.checkConnection();
 
   App.firebase.checkUser();
